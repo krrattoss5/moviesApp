@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const DetailScreen = () => {
+const DetailsScreen = () => {
   return (
     <View>
       <Text>HomeScreen</Text>
@@ -9,4 +9,4 @@ const DetailScreen = () => {
   );
 };
 
-export default DetailScreen;
+export default DetailsScreen;
