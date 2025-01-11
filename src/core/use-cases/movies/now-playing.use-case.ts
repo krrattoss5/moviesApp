@@ -1,5 +1,6 @@
 import {HttpAdapter} from '../../../config/adapters/http/http.adapter';
 import {NowPlayingResponse} from '../../../infrastructure/interfaces/movie-db.responses';
+import {MovieMapper} from '../../../infrastructure/mappers/movie.mappers';
 import {Movie} from '../../entities/movie.entity';
 
 export const moviesNowPlayingUseCase = async (
@@ -9,9 +10,8 @@ export const moviesNowPlayingUseCase = async (
     // const nowPlaying = await fetcher.get<Record<string,any>('/now_playing');
     const nowPlaying = await fetcher.get<NowPlayingResponse>('/now_playing');
 
-    console.log({nowPlaying});
+    return nowPlaying.results.map(MovieMapper.fromMovieDBResultToEntity);
 
-    return [];
   } catch (error) {
     console.log(error);
 
