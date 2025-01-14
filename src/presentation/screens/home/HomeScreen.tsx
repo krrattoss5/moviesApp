@@ -1,13 +1,34 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {useMovies} from '../../hooks/useMovies';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import PosterCarousel from '../../components/movies/PosterCarousel';
+import {HorizontalCarousel} from '../../components/movies/HorizontalCarousel';
 
 const HomeScreen = () => {
-  const {} = useMovies();
+  const {top} = useSafeAreaInsets();
+  const {isLoading, nowPlaying, popular, topRating, upcoming} = useMovies();
+
+  if (isLoading) {
+    return <Text>Cargando...</Text>;
+  }
+
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <ScrollView>
+      <View style={{marginTop: top + 20, paddingBottom: 30}}>
+        {/* Principal */}
+        <PosterCarousel height={430} movies={nowPlaying} />
+
+        {/* Populares */}
+        <HorizontalCarousel movies={popular} title="Populares" />
+
+        {/* Top Rated */}
+        <HorizontalCarousel movies={topRating} title="Mejor Calificadas" />
+
+        {/* Proximamente */}
+        <HorizontalCarousel movies={upcoming} title="Proximamente" />
+      </View>
+    </ScrollView>
   );
 };
 
