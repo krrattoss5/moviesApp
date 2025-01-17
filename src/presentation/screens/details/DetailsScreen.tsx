@@ -6,6 +6,7 @@ import {RootStackParams} from '../../navigations/StackNavigator';
 import {useMovie} from '../../hooks/useMovie';
 import {MovieHeader} from '../../components/movie/MovieHeader';
 import {MovieDetail} from '../../components/movie/MovieDetail';
+import {FullScreenLoaders} from '../../components/loaders/FullScreenLoader';
 
 interface Props extends StackScreenProps<RootStackParams, 'Details'> {}
 
@@ -14,21 +15,23 @@ const DetailsScreen = ({route}: Props) => {
   // const {movieId} = useRoute().params;
   const {movieId} = route.params;
 
-  const {movie, isLoading} = useMovie(movieId);
+  const {movie, isLoading, cast = []} = useMovie(movieId);
 
   if (isLoading) {
-    return <Text>Loading...</Text>;
+    return <FullScreenLoaders />;
   }
 
   return (
     <ScrollView>
+      {/* Header */}
       <MovieHeader
         originalTitle={movie!.originalTitle}
         poster={movie!.poster}
         title={movie!.title}
       />
 
-      <MovieDetail movie={movie!} />
+      {/* Details */}
+      <MovieDetail movie={movie!} cast={cast} />
     </ScrollView>
   );
 };
